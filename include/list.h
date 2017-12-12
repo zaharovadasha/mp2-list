@@ -10,30 +10,30 @@ struct Node
 {
   DataType data;
   Node* next;
-  // здесь могут быть конструкторы, методы, деструктор Node
+  // Р·РґРµСЃСЊ РјРѕРіСѓС‚ Р±С‹С‚СЊ РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂС‹, РјРµС‚РѕРґС‹, РґРµСЃС‚СЂСѓРєС‚РѕСЂ Node
 };
 
 class List
 {
-  // любые поля
+  // Р»СЋР±С‹Рµ РїРѕР»СЏ
 public:
   List() {};
   List(const List& list2);
   List& operator=(const List& list2);
   ~List() {};
 
-  void InserToHead(const DataType& d); // вставить элемент d первым
-  void InserToTail(const DataType& d); // вставить элемент d последним
-  void InsertAfter(Node* node, const DataType& d); // вставить элемент d после звена node
-  void Delete(const DataType& d); // удалить звено со значением data = d
-  Node* Search(const DataType& d); // найти указатель на звено со значением data = d
-  void Clean(); // удалить все звенья
-  int GetSize(); // узнать число звеньев в списке
-  Node* GetHead(); // получить указатель на первое звено списка
+  void InserToHead(const DataType& d); // РІСЃС‚Р°РІРёС‚СЊ СЌР»РµРјРµРЅС‚ d РїРµСЂРІС‹Рј
+  void InserToTail(const DataType& d); // РІСЃС‚Р°РІРёС‚СЊ СЌР»РµРјРµРЅС‚ d РїРѕСЃР»РµРґРЅРёРј
+  void InsertAfter(Node* node, const DataType& d); // РІСЃС‚Р°РІРёС‚СЊ СЌР»РµРјРµРЅС‚ d РїРѕСЃР»Рµ Р·РІРµРЅР° node
+  void Delete(const DataType& d); // СѓРґР°Р»РёС‚СЊ Р·РІРµРЅРѕ СЃРѕ Р·РЅР°С‡РµРЅРёРµРј data = d
+  Node* Search(const DataType& d); // РЅР°Р№С‚Рё СѓРєР°Р·Р°С‚РµР»СЊ РЅР° Р·РІРµРЅРѕ СЃРѕ Р·РЅР°С‡РµРЅРёРµРј data = d
+  void Clean(); // СѓРґР°Р»РёС‚СЊ РІСЃРµ Р·РІРµРЅСЊСЏ
+  int GetSize(); // СѓР·РЅР°С‚СЊ С‡РёСЃР»Рѕ Р·РІРµРЅСЊРµРІ РІ СЃРїРёСЃРєРµ
+  Node* GetHead(); // РїРѕР»СѓС‡РёС‚СЊ СѓРєР°Р·Р°С‚РµР»СЊ РЅР° РїРµСЂРІРѕРµ Р·РІРµРЅРѕ СЃРїРёСЃРєР°
 
-  void Inverse(); // инвертировать список, т.е. звенья должны идти в обратном порядке
-  List Merge(Node* node, const List& list2); // создать список3, добавив список2 в текущий список после указателя node  
-  List Merge(const List& list2); // создать список3, добавив в конец текущего списка список2
+  void Inverse(); // РёРЅРІРµСЂС‚РёСЂРѕРІР°С‚СЊ СЃРїРёСЃРѕРє, С‚.Рµ. Р·РІРµРЅСЊСЏ РґРѕР»Р¶РЅС‹ РёРґС‚Рё РІ РѕР±СЂР°С‚РЅРѕРј РїРѕСЂСЏРґРєРµ
+  List Merge(Node* node, const List& list2); // СЃРѕР·РґР°С‚СЊ СЃРїРёСЃРѕРє3, РґРѕР±Р°РІРёРІ СЃРїРёСЃРѕРє2 РІ С‚РµРєСѓС‰РёР№ СЃРїРёСЃРѕРє РїРѕСЃР»Рµ СѓРєР°Р·Р°С‚РµР»СЏ node  
+  List Merge(const List& list2); // СЃРѕР·РґР°С‚СЊ СЃРїРёСЃРѕРє3, РґРѕР±Р°РІРёРІ РІ РєРѕРЅРµС† С‚РµРєСѓС‰РµРіРѕ СЃРїРёСЃРєР° СЃРїРёСЃРѕРє2
 
   friend ostream& operator<<(ostream& os, const List& l);
 };
