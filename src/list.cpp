@@ -29,12 +29,9 @@ Node Node::operator=(const Node &node2)
 
 bool Node::operator==(const Node &node2) const
 {
-	int flag = 0;
-	if ((data != node2.data) || (next != node2.next))
-		flag = 1;
-	if (flag = 0)
-		return true;
-	else return false;
+	if (data != node2.data)
+		return false;
+	else return true;
 }
 
 List::List(const List& list2)
@@ -42,11 +39,13 @@ List::List(const List& list2)
 	if (list2.unit != NULL)
 	{
 		unit = new Node(list2.unit->data, list2.unit->next);
-		Node* temp = unit;
-		while (temp->next != NULL)
+		Node* temp1 = unit;
+		Node *temp2 = list2.unit->next;
+		while (temp2->next != NULL)
 		{
-			temp->next = new Node(temp->data, temp->next);
-			temp = temp->next;
+			temp1->next = new Node(temp1->data, temp1->next);
+			temp1 = temp1->next;
+			temp2 = temp2->next;
 		}
 	}
 	else unit = NULL;
@@ -56,6 +55,7 @@ List& List::operator=(const List& list2)
 {
 	if (unit != list2.unit)
 	{
+		Clean();
 		if (list2.unit == NULL)
 		{
 			unit = list2.unit;
@@ -63,7 +63,7 @@ List& List::operator=(const List& list2)
 		}
 		else
 		{
-			this->Clean();
+			unit = new Node(list2.unit->data, list2.unit->next);
 			Node *a1 = unit;
 			Node *a2 = list2.unit;
 			while (a2 != NULL)
@@ -170,10 +170,16 @@ void List::Clean()
 
 	if (a != NULL)
 	{
-		Del();
+		if (a->next != NULL)
+		{
+			b = a->next;
+			delete a;
+			a = b;
+		}
 		delete a;
-		b = NULL;
+		unit = NULL;
 	}
+
 }
 
 int List::GetSize()
