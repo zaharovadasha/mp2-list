@@ -56,7 +56,7 @@ List& List::operator=(const List& list2)
 	if (unit != list2.unit)
 	{
 		Clean();
-		if (list2.unit == NULL)
+		if (list2.unit != NULL)
 		{
 			unit = list2.unit;
 			return *this;
@@ -79,7 +79,8 @@ List& List::operator=(const List& list2)
 
 void List::InsertToHead(const DataType & d)
 {
-	Node *a = new Node(d, unit);
+	Node *a = new Node(d, unit); //&&&&&&&&&&
+	a->next = unit;
 	unit = a;
 }
 
