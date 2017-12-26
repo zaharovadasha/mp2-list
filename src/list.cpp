@@ -79,7 +79,7 @@ List& List::operator=(const List& list2)
 
 void List::InsertToHead(const DataType & d)
 {
-	Node *a = new Node(d, unit); //&&&&&&&&&&
+	Node *a = new Node(d, unit); 
 	a->next = unit;
 	unit = a;
 }
