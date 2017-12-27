@@ -38,12 +38,12 @@ List::List(const List& list2)
 {
 	if (list2.unit != NULL)
 	{
-		unit = new Node(list2.unit->data, list2.unit->next);
+		unit = new Node(list2.unit->data, NULL);
 		Node* temp1 = unit;
 		Node *temp2 = list2.unit->next;
-		while (temp2->next != NULL)
+		while (temp2 != NULL)
 		{
-			temp1->next = new Node(temp1->data, temp1->next);
+			temp1->next = new Node(temp2->data, NULL);
 			temp1 = temp1->next;
 			temp2 = temp2->next;
 		}
@@ -63,12 +63,12 @@ List& List::operator=(const List& list2)
 		}
 		else
 		{
-			unit = new Node(list2.unit->data, list2.unit->next);
+			unit = new Node(list2.unit->data, NULL);
 			Node *a1 = unit;
-			Node *a2 = list2.unit;
+			Node *a2 = list2.unit->next;
 			while (a2 != NULL)
 			{
-				a1 = new Node(a2->data, a2->next);
+				a1->next = new Node(a2->data, NULL);
 				a1 = a1->next;
 				a2 = a2->next;
 			}
@@ -99,14 +99,14 @@ void List::InsertToTail(const DataType& d)
 
 void List::InsertAfter(Node* node, const DataType& d) // вставить элемент d после звена node
 {
-	if (unit != NULL)
+	if ((unit != NULL) && (node != NULL))
 	{
 		Node *a;
 		a = new Node(d, node->next);
 		node->next = a;
 	}
-	else
-		throw "Error";
+	//else
+	//	throw "Error";
 };
 
 void List::Delete(const DataType & d)
@@ -298,13 +298,13 @@ ostream & operator<<(ostream & os, const List & l)
 
 bool List::operator==(const List & list2) const
 {
-	int flag = 0;
+	int flag = 1;
 	Node *a1 = unit;
 	Node *a2 = list2.unit;
 	while (a1 && a2 && flag)
 	{
 		if (a1->data != a2->data)
-			flag = 1;
+			flag = 0;
 		else
 		{
 			a1 = a1->next;
@@ -314,7 +314,7 @@ bool List::operator==(const List & list2) const
 	}
 	if (a1 || a2)
 		flag = 0;
-	if (flag=0)
+	if (flag==0)
 	return false;
 	else return true;
 }
