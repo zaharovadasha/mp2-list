@@ -29,7 +29,7 @@ Node Node::operator=(const Node &node2)
 
 bool Node::operator==(const Node &node2) const
 {
-	if (data != node2.data)
+	if ((data != node2.data)&& (next == node2.next))
 		return false;
 	else return true;
 }
@@ -56,7 +56,7 @@ List& List::operator=(const List& list2)
 	if (unit != list2.unit)
 	{
 		Clean();
-		if (list2.unit != NULL)
+		if (list2.unit == NULL)
 		{
 			unit = list2.unit;
 			return *this;
@@ -165,23 +165,19 @@ void List::Del()
 }
 
 void List::Clean()
-{
-	Node *a = unit;
-	Node *b;
-
-	if (a != NULL)
-	{
-		if (a->next != NULL)
-		{
-			b = a->next;
-			delete a;
-			a = b;
-		}
-		delete a;
-		unit = NULL;
-	}
-
-}
+  {
+	  if (unit == NULL)
+		  return;
+	  Node *a = unit, *n;
+	  while (a->next != NULL)
+	  {
+		  n = a->next->next;
+		  delete a->next;
+		  a->next = n;
+	  }
+	  delete a;
+	  unit = NULL;
+  }
 
 int List::GetSize()
 {
@@ -217,39 +213,77 @@ void List::Inverse()
 }
 
 List List::Merge(Node* node, const List& list2)
-{
-	if (unit == NULL)
-		return list2;
-	List list3 = *this;
-	Node *a1 = list3.unit, *n, *a2 = list2.unit;
-	while (a1 != node)
-	{
-		a1 = a1->next;
-	}
-	n = a1->next;
-	while (a2 != NULL)
-	{
-		a1->next = new Node(a2->data, a2->next);
-		a1 = a1->next;
-		a2 = a2->next;
-	}
-	a1->next = n;
-	return list3;
-}
+  {
+	  if (unit != NULL)
+	  {
+		  List list3;
+		  list3.unit = new Node(unit->data, NULL);
+		  Node *a1 = list3.unit;
+		  Node *a2 = unit;
+		  
+		  while ((a2->next!=NULL) && (a2 != node))
+		  {
+			  a1->next = new Node(a2->next->data, NULL);
+			  a1 = a1->next;
+			  a2 = a2->next;
+		  }
+		  if (node != NULL)
+		  {
+			  Node *a3 = list2.unit;
+			  while (a3 != NULL)
+			  {
+				  a1->next = new Node(a3->data,NULL);
+				  a1 = a1->next;
+				  a3 = a3->next;
+			  }
+			  while (a2->next!=NULL)
+			  {
+				  a1->next = new Node(a2->next->data, NULL);
+				  a1 = a1->next;
+				  a2 = a2->next;
+			  }
+		  }
+		  return list3;
+	  }
+	  else
+	  {
+		  List res(list2);
+		  return res;
+	  }
+	  
+  }  
 
-List List::Merge(const List& list2)
-{
-	if (unit == NULL)
-		return list2;
-	List list3 = *this;
-	Node *a = list3.unit;
-	while (a->next != NULL)
-	{
-		a = a->next;
-	}
-	a->next = list2.unit;
-	return list3;
-}
+
+ List List::Merge(const List& list2)
+  {
+	  if (unit != NULL)
+	  {
+		  if (list2.unit == NULL)
+			  return *this;
+		  List list3(*this);
+		  Node *a1 = list3.unit, *a2 = list2.unit;
+		  while (a1->next != NULL)
+		  {
+			  a1 = a1->next;
+		  }
+		  a1->next = new Node(list2.unit->data,NULL);
+		  a1 = a1->next;
+		  a2 = a2->next;
+		  while (a2)
+		  {
+			  a1->next = new Node(a2->data, NULL);
+			  a1 = a1->next;
+			  a2 = a2->next;
+		  }
+		  return list3;
+	  }
+	  else
+	  {
+		  List res(list2);
+		  return res;
+	  }
+  }
+
 
 ostream & operator<<(ostream & os, const List & l)
 {
